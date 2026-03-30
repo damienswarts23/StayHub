@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>StayHub - Cape Town</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&family=Open+Sans&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Open Sans', Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+      background: #F9F9F9;
+      color: #555;
+      overflow-x: hidden;
+    }
+
+    /* Smooth fade-in for sections */
+    section, header, footer {
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeUp 1s ease forwards;
+    }
+    header { animation-delay: 0.2s; }
+    .grid { animation-delay: 0.4s; }
+    .reviews { animation-delay: 0.6s; }
+    .host { animation-delay: 0.8s; }
+    .about, .services, .faq, .contact { animation-delay: 1s; }
+    footer { animation-delay: 1.2s; }
+
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Header */
+    .header-index {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: linear-gradient(90deg, #008080, #00bfa5);
+      color: white;
+      padding: 20px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+
+    .logo-index {
+      display: flex;
+      align-items: center;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 22px;
+      font-weight: bold;
+      animation: slideInLeft 1s ease forwards;
+    }
+
+    .logo-img {
+      height: 60px;
+      margin-right: 10px;
+      transition: transform 0.3s;
+    }
+    .logo-img:hover {
+      transform: rotate(-5deg) scale(1.1);
+    }
+
+    @keyframes slideInLeft {
+      from { transform: translateX(-50px); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+
+    .nav-button {
+      margin-left: 15px;
+      text-decoration: none;
+      color: white;
+      font-weight: bold;
+      font-family: 'Montserrat', sans-serif;
+      transition: color 0.3s, transform 0.3s;
+    }
+    .nav-button:hover {
+      color: #FF7F32;
+      transform: scale(1.1);
+    }
+
+    .header-text {
+      text-align: center;
+      font-size: 24px;
+      font-family: 'Montserrat', sans-serif;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+    /* Grid Sections */
+    .grid {
+      display: flex;
+      justify-content: space-around;
+      margin: 40px 20px;
+      flex-wrap: wrap;
+    }
+
+    .grid-item {
+      flex: 1;
+      margin: 10px;
+      padding: 20px;
+      background: white;
+      border-radius: 8px;
+      min-width: 250px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .grid-item:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+    }
+
+    .grid-item h2 {
+      font-size: 24px;
+      margin-bottom: 10px;
+      font-family: 'Montserrat', sans-serif;
+      color: #008080;
+    }
+
+    /* Section Titles */
+    .title {
+      text-align: center;
+      font-size: 30px;
+      font-weight: bold;
+      font-family: 'Montserrat', sans-serif;
+      color: #FF7F32;
+      position: relative;
+    }
+    .title::after {
+      content: "";
+      display: block;
+      width: 60px;
+      height: 3px;
+      background: #008080;
+      margin: 10px auto;
+      animation: growLine 1s ease forwards;
+    }
+    @keyframes growLine {
+      from { width: 0; }
+      to { width: 60px; }
+    }
+
+    /* Host Section */
+    .host-box {
+      background: #E0F7FA;
+      padding: 20px;
+      border-radius: 8px;
+      display: inline-block;
+      transition: transform 0.3s;
+    }
+    .host-box:hover {
+      transform: scale(1.05);
+    }
+
+    .host-text {
+      font-weight: bold;
+      text-transform: uppercase;
+      font-family: 'Montserrat', sans-serif;
+      color: #008080;
+    }
+
+    .host-button {
+      background: #FF7F32;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      margin-top: 10px;
+      cursor: pointer;
+      border-radius: 5px;
+      font-family: 'Montserrat', sans-serif;
+      transition: background 0.3s, transform 0.3s;
+    }
+    .host-button:hover {
+      background: #e6691f;
+      transform: translateY(-3px);
+    }
+
+    /* Footer */
+    .footer {
+      background: #333;
+      color: white;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .footer-logo {
+      height: 80px;
+      margin-top: 10px;
+      transition: transform 0.3s;
+    }
+    .footer-logo:hover {
+      transform: rotate(3deg) scale(1.05);
+    }
+
+    .social-icons div {
+      display: inline-block;
+      width: 15px;
+      height: 15px;
+      background: #FF7F32;
+      border-radius: 50%;
+      margin: 5px;
+      transition: transform 0.3s;
+    }
+    .social-icons div:hover {
+      transform: scale(1.3);
+      background: #008080;
+    }
+
+    @media (max-width: 768px) {
+      .grid, .reviews-section {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+  </style>
+</head>
+<body id="index-body">
+
+  <!-- Header -->
+  <header class="header-index">
+    <div class="logo-index">
+      <img src="logo.png" alt="StayHub logo" class="logo-img">
+      <span>StayHub</span>
+    </div>
+    <nav class="login-register">
+      <a href="login.php" class="nav-button">Login</a>
+      <a href="register.html" class="nav-button">Register</a>
+    </nav>
+    <div class="header-text">
+      <p>MAKING</p>
+      <p>LIFE EASIER</p>
+    </div>
+  </header>
+
+  <!-- Why Us Section -->
+  <section class="grid">
+    <article class="grid-item">
+      <h2>Why Us?</h2>
+      <p>We connect CPUT students with safe, affordable, and convenient housing options. Every listing is verified to give you peace of mind.</p>
+    </article>
+    <article class="grid-item">
+      <h2>Trusted Listings</h2>
+      <p>All our properties are vetted to ensure they meet student needs, from reliable landlords to proximity to campus facilities.</p>
+    </article>
+    <article class="grid-item">
+      <h2>Easy to Use</h2>
+      <p>Our platform is designed with students in mind — quick searches, clear details, and a smooth booking process.</p>
+    </article>
+  </section>
+
+  <!-- Reviews Section -->
+  <section class="reviews">
+    <h2 class="title">Reviews</h2>
+    <div class="grid reviews-section">
+      <article class="grid-item">
+        <p class="reviewer">John Doe</p>
+        <p>“The platform gave me verified options, and the landlord was great.”</p>
+      </article>
+      <article class="grid-item">
+        <p class="reviewer">Jane Smith</p>
+        <p>“Finding a place near campus was so easy. I moved in stress-free!”</p>
+      </article>
+      <article class="grid-item">
+        <p class="reviewer">Michael Lee</p>
+        <p>"Student
