@@ -1,19 +1,13 @@
 <?php
-
 $host = "localhost";
-$dbname = "cput_stays";
+$dbname = "stayhub";
 $username = "root";
-$password = "#Chelsea4life";
+$password = "";
 
-$mysqli = new mysqli(hostname: $host,
-                     username: $username,
-                     password: $password,
-                     database: $dbname);
+$conn = new mysqli($host, $username, $password, $dbname);
 
-if($mysqli->connect_errno){
-    die("Connection error:" . $mysqli->connect_error);
-    
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
 }
-
-return $mysqli;
+?>
 
