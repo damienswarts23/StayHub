@@ -1,106 +1,109 @@
 <?php
-$is_invalid=false;
-if($_SERVER["REQUEST_METHOD"] === "POST"){
+session_start();
 
-    $mysqli = require __DIR__ . "/database.php";
-    $email = $_POST["email"];
+$is_invalid = false;
+
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+
+    $mysqli = require __DIR__ . "/db.php";
+
+    $email = trim($_POST["email"]);
     $password = $_POST["password"];
 
-    $domain = substr(strrchr($email, "@"), 1);
-
-    if($domain === "accoms.ac.za"){
-      $table = "admin";
-      $id_col = "AdminID";
-      $redirect = "admin-panel.php";
-    } else{
-
-      $table = "student";
-      $id_col = "StudNum";
-      $redirect = "homepage.php";
-    }
-
-    $sql = sprintf("SELECT * FROM $table WHERE Email ='%s'",
-                  $mysqli->real_escape_string($email));
-    $result = $mysqli->query($sql);
+    // 1. Check students table first
+    $sql = "SELECT * FROM students WHERE email = ?";
+    $stmt = $mysqli->prepare($sql);
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $result = $stmt->get_result();
     $user = $result->fetch_assoc();
 
-    if($user && password_verify($password, $user["Password"])){
-      session_start();
-      session_regenerate_id();
-      $_SESSION["user_id"] = $user[$id_col];
-      $_SESSION["role"] = $table;
-      header("Location: $redirect");
-      exit;
+    if ($user) {
+        if (password_verify($password, $user["password"])) {
+            session_regenerate_id(true);
 
+            $_SESSION["user_id"] = $user["student_id"];
+            $_SESSION["role"] = "student";
+            $_SESSION["email"] = $user["email"];
+            $_SESSION["first_name"] = $user["first_name"];
+            $_SESSION["last_name"] = $user["last_name"];
+            $_SESSION["stud_number"] = $user["stud_number"];
+
+            header("Location: homepage.php");
+            exit;
+        }
+    } else {
+        // 2. If not found in students, check hosts table
+        $sql = "SELECT * FROM hosts WHERE email = ?";
+        $stmt = $mysqli->prepare($sql);
+        $stmt->bind_param("s", $email);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $user = $result->fetch_assoc();
+
+        if ($user && password_verify($password, $user["password"])) {
+            session_regenerate_id(true);
+
+            $_SESSION["user_id"] = $user["host_id"];
+            $_SESSION["role"] = "host";
+            $_SESSION["email"] = $user["email"];
+            $_SESSION["first_name"] = $user["first_name"];
+            $_SESSION["last_name"] = $user["last_name"];
+
+            header("Location: admin-panel.php");
+            exit;
+        }
     }
 
     $is_invalid = true;
-    /*$sql = sprintf("SELECT * FROM student
-                    WHERE email ='%s'",
-                    $mysqli->real_escape_string($_POST["email"]));
-
-              $result = $mysqli->query($sql);
-
-              $user = $result->fetch_assoc();
-
-                    if($user){
-
-                        if(password_verify($_POST["password"], $user["Password"])){
-
-                            session_start();
-
-                            session_regenerate_id();
-
-                            $_SESSION["user_id"]= $user["IDNum"];//Database value is IDNum, for some reason this being different didn't affect logging in
-                                                                //with ID_NUM however it seems to affect profile so change it to database column name
-
-                            header("Location: homepage.html");
-                            //this needs to be changed to a different location
-                            exit;
-
-                        }
-
-                    }
-                    $is_invalid=true;
-                    */
-  }
-  ?>
+}
+?>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Login</title>
-  <link rel="stylesheet" href="login.css" />
+    <meta charset="UTF-8" />
+    <title>Login</title>
+    <link rel="stylesheet" href="login.css" />
 </head>
 <body>
-  <header>
-    <div class="logo">StayHub</div>
-    <nav>
-      <a href="index.html">Home</a>
-      <a href="register.html">Register</a>
-    </nav>
-  </header>
+    <header>
+        <div class="logo">StayHub</div>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="register.html">Register</a>
+        </nav>
+    </header>
 
-  <main class="form-container">
+    <main class="form-container">
+        <h2>Login</h2>
 
-    <h2>Login</h2>
-    <?php if($is_invalid): ?>
-      <em>Invalid Login</em>
-      <?php endif; ?>
+        <?php if ($is_invalid): ?>
+            <em>Invalid email or password</em>
+        <?php endif; ?>
 
-    <form method ="post">
-      <label for ="email">Email</label>
-      <input type="email" name="email" id="email"  
-      value="<?= htmlspecialchars($_POST["email"] ?? "")?>" required/>
+        <form method="post">
+            <label for="email">Email</label>
+            <input 
+                type="email" 
+                name="email" 
+                id="email"
+                value="<?= htmlspecialchars($_POST["email"] ?? "") ?>" 
+                required
+            />
 
-      <label for ="password">Password</label>
-      <input type="password" name="password" id ="password" required />
+            <label for="password">Password</label>
+            <input 
+                type="password" 
+                name="password" 
+                id="password" 
+                required
+            />
 
+            <button type="submit">Login</button>
+        </form>
 
-      <button type="submit">Login</button>
-    </form>
-    <p>Don't have an account? <a href="register.html">Register here</a></p>
-  </main>
+        <p>Don't have an account? <a href="register.html">Register here</a></p>
+    </main>
 </body>
 </html>

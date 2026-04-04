@@ -1,13 +1,14 @@
 <?php
+
 $host = "localhost";
 $dbname = "stayhub";
 $username = "root";
 $password = "";
 
-$conn = new mysqli($host, $username, $password, $dbname);
+$mysqli = new mysqli($host, $username, $password, $dbname);
 
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+if ($mysqli->connect_errno) {
+    die("Connection failed: " . $mysqli->connect_error);
 }
-?>
 
+return $mysqli; 
