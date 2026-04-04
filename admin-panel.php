@@ -90,7 +90,7 @@ $firstName = $_SESSION["first_name"] ?? "Host";
   <header>
     <div class="logo">StayHub Admin Panel</div>
     <nav>
-      <a href="logout.php">Logout</a>
+      <a href="index.html">Logout</a>
     </nav>
   </header>
 
@@ -102,7 +102,7 @@ $firstName = $_SESSION["first_name"] ?? "Host";
       <a class="button" href="#">Add Accommodation</a>
       <a class="button" href="#">View Applications</a>
       <a class="button" href="#">View Occupants</a>
-      <a class="button" href="logout.php">Logout</a>
+      <a class="button" href="index.html">Logout</a>
     </div>
   </main>
 
