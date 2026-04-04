@@ -1,5 +1,5 @@
 <?php
-require_once "db.php";
+$mysqli = require __DIR__ . "/db.php";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
@@ -25,10 +25,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 (role, id_num, first_name, last_name, stud_number, email, cell_number, enrollment_year, password, funding)
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-        $stmt = $conn->prepare($sql);
+        $stmt = $mysqli->prepare($sql);
 
         if (!$stmt) {
-            die("Prepare failed: " . $conn->error);
+            die("Prepare failed: " . $mysqli->error);
         }
 
         $stmt->bind_param(
@@ -51,10 +51,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 (role, id_num, first_name, last_name, email, cell_number, password)
                 VALUES (?, ?, ?, ?, ?, ?, ?)";
 
-        $stmt = $conn->prepare($sql);
+        $stmt = $mysqli->prepare($sql);
 
         if (!$stmt) {
-            die("Prepare failed: " . $conn->error);
+            die("Prepare failed: " . $mysqli->error);
         }
 
         $stmt->bind_param(
@@ -80,7 +80,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     $stmt->close();
-    $conn->close();
+    $mysqli->close();
 
 } else {
     echo "Invalid request method.";
