@@ -2,12 +2,304 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Register</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Poppins", "Segoe UI", sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      color: #fff;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(90, 180, 255, 0.18), transparent 25%),
+        radial-gradient(circle at 80% 30%, rgba(255, 170, 90, 0.12), transparent 20%),
+        radial-gradient(circle at 50% 80%, rgba(100, 140, 255, 0.1), transparent 30%),
+        linear-gradient(180deg, #07111d 0%, #0a1d2f 45%, #09131f 100%);
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background-image:
+        radial-gradient(2px 2px at 20px 30px, rgba(255,255,255,0.55), transparent),
+        radial-gradient(2px 2px at 140px 90px, rgba(255,255,255,0.35), transparent),
+        radial-gradient(1.5px 1.5px at 240px 160px, rgba(255,255,255,0.45), transparent),
+        radial-gradient(2px 2px at 420px 80px, rgba(255,255,255,0.28), transparent),
+        radial-gradient(1.5px 1.5px at 600px 140px, rgba(255,255,255,0.35), transparent),
+        radial-gradient(2px 2px at 760px 40px, rgba(255,255,255,0.4), transparent);
+      background-size: 800px 300px;
+      opacity: 0.35;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    header {
+      width: 100%;
+      padding: 28px 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: relative;
+      z-index: 2;
+    }
+
+    .logo {
+      font-size: 1.4rem;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      color: #eef7ff;
+    }
+
+    nav {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      flex-wrap: wrap;
+      padding: 8px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      box-shadow: 0 10px 35px rgba(0, 0, 0, 0.18);
+    }
+
+    nav a {
+      text-decoration: none;
+      color: #eaf4ff;
+      font-size: 0.9rem;
+      padding: 10px 18px;
+      border-radius: 999px;
+      transition: 0.3s ease;
+    }
+
+    nav a:hover {
+      background: rgba(255, 255, 255, 0.09);
+      color: #ffffff;
+    }
+
+    main {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 30px 20px 60px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .panel {
+      width: 100%;
+      max-width: 1180px;
+      min-height: 78vh;
+      border-radius: 36px;
+      overflow: hidden;
+      position: relative;
+      background:
+        linear-gradient(rgba(7, 18, 29, 0.28), rgba(7, 18, 29, 0.52)),
+        url("Register\ bacground.png") center/cover no-repeat;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      box-shadow:
+        0 30px 80px rgba(0, 0, 0, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    }
+
+    .panel::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(120deg, rgba(0, 0, 0, 0.18), rgba(0, 0, 0, 0.05)),
+        radial-gradient(circle at 70% 70%, rgba(255, 140, 70, 0.22), transparent 18%);
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 70px;
+    }
+
+    .card {
+      width: 100%;
+      max-width: 470px;
+      padding: 32px 28px;
+      border-radius: 28px;
+      background: rgba(9, 22, 36, 0.42);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      box-shadow:
+        0 18px 50px rgba(0, 0, 0, 0.28),
+        inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 8px 14px;
+      border-radius: 999px;
+      margin-bottom: 18px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: #dcecff;
+      font-size: 0.8rem;
+      letter-spacing: 0.5px;
+    }
+
+    .card h2 {
+      font-size: 2.6rem;
+      line-height: 1.1;
+      font-weight: 600;
+      margin-bottom: 14px;
+      color: #ffffff;
+    }
+
+    .card p {
+      color: rgba(235, 244, 255, 0.82);
+      line-height: 1.7;
+      font-size: 0.97rem;
+      margin-bottom: 26px;
+      max-width: 390px;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    label {
+      font-size: 0.92rem;
+      color: #dce9f7;
+      margin-bottom: 2px;
+    }
+
+    button {
+      padding: 16px 18px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: #ffffff;
+      cursor: pointer;
+      transition: 0.3s ease;
+      text-align: center;
+    }
+
+    button:first-of-type {
+      background: linear-gradient(135deg, #a9682c, #d78845, #9c5f2d);
+      box-shadow: 0 10px 25px rgba(176, 111, 53, 0.35);
+    }
+
+    button:last-of-type {
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .floating-note {
+      position: absolute;
+      right: 40px;
+      bottom: 35px;
+      z-index: 2;
+      padding: 10px 18px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.07);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      color: #dfeeff;
+      font-size: 0.82rem;
+    }
+
+    footer {
+      padding: 18px 20px 24px;
+      text-align: center;
+      color: rgba(227, 238, 248, 0.7);
+      font-size: 0.88rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    @media (max-width: 900px) {
+      header {
+        padding: 24px 20px;
+        flex-direction: column;
+        gap: 18px;
+      }
+
+      .panel {
+        min-height: auto;
+      }
+
+      .hero-content {
+        padding: 35px 20px;
+      }
+
+      .card {
+        max-width: 100%;
+      }
+
+      .card h2 {
+        font-size: 2rem;
+      }
+
+      .floating-note {
+        position: static;
+        margin: 18px 20px 20px;
+        display: inline-block;
+      }
+    }
+
+    @media (max-width: 560px) {
+      nav {
+        justify-content: center;
+      }
+
+      nav a {
+        padding: 9px 14px;
+        font-size: 0.85rem;
+      }
+
+      .card {
+        padding: 24px 18px;
+        border-radius: 24px;
+      }
+
+      .card h2 {
+        font-size: 1.75rem;
+      }
+
+      button {
+        padding: 15px 16px;
+      }
+    }
+  </style>
 </head>
 <body>
 
   <header>
-    <div>Stay Hub</div>
+    <div class="logo">Stay Hub</div>
     <nav>
       <a href="index.html">Home</a>
       <a href="login.php">Login</a>
@@ -15,19 +307,33 @@
   </header>
 
   <main>
-    <h2>Register As</h2>
+    <section class="panel">
+      <div class="hero-content">
+        <div class="card">
+          <span class="tag">Premium access starts here</span>
+          <h2>Register As</h2>
+          <p>
+            Choose how you want to begin your Stay Hub journey. Whether you are
+            booking beautiful accommodation or listing your property for guests,
+            your experience starts with the right account.
+          </p>
 
-    <form>
-      <label>Select Role:</label>
+          <form>
+            <label>Select Role:</label>
 
-      <button type="submit" formaction="register_student.html">
-        Continue as Customer
-      </button>
+            <button type="submit" formaction="register_student.html">
+              Continue as Customer
+            </button>
 
-      <button type="submit" formaction="register_host.html">
-        Continue as Landlord
-      </button>
-    </form>
+            <button type="submit" formaction="register_host.html">
+              Continue as Landlord
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <div class="floating-note">Comfort • Luxury • Explore</div>
+    </section>
   </main>
 
   <footer>
