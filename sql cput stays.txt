@@ -1,0 +1,93 @@
+CREATE DATABASE IF NOT EXISTS cput_stays;
+USE cput_stays;
+
+CREATE TABLE admin (
+    AdminID INT AUTO_INCREMENT PRIMARY KEY,
+    IDNum VARCHAR(20) NOT NULL UNIQUE,
+    FirstName VARCHAR(100) NOT NULL,
+    LastName VARCHAR(100) NOT NULL,
+    Email VARCHAR(150) NOT NULL UNIQUE,
+    CellNumber VARCHAR(20) NOT NULL,
+    Password VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE student (
+    StudNum INT PRIMARY KEY,
+    IDNum VARCHAR(20) NOT NULL UNIQUE,
+    FirstName VARCHAR(100) NOT NULL,
+    LastName VARCHAR(100) NOT NULL,
+    Email VARCHAR(150) NOT NULL UNIQUE,
+    CellNumr VARCHAR(20) NOT NULL,
+    EnrollYr INT NOT NULL,
+    Password VARCHAR(255) NOT NULL,
+    Funding ENUM('Bursary', 'Self-Funded', 'Other') NOT NULL
+);
+
+CREATE TABLE accommodation (
+    AccommodationID INT AUTO_INCREMENT PRIMARY KEY,
+    AdminID INT NOT NULL,
+    Name VARCHAR(150) NOT NULL,
+    Address VARCHAR(255) NOT NULL,
+    ContactNum VARCHAR(20) NOT NULL,
+    Amenities TEXT NOT NULL,
+    CONSTRAINT fk_accommodation_admin
+        FOREIGN KEY (AdminID) REFERENCES admin(AdminID)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
+);
+
+CREATE TABLE rooms (
+    RmNum INT AUTO_INCREMENT PRIMARY KEY,
+    AccommodationID INT NOT NULL,
+    RmType VARCHAR(100) NOT NULL,
+    TotRms INT NOT NULL,
+    AvailableRms INT NOT NULL,
+    PricePerRmType DECIMAL(10,2) NOT NULL,
+    CONSTRAINT fk_rooms_accommodation
+        FOREIGN KEY (AccommodationID) REFERENCES accommodation(AccommodationID)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
+);
+
+CREATE TABLE booking (
+    BookingID INT AUTO_INCREMENT PRIMARY KEY,
+    AccommodationID INT NOT NULL,
+    StudNum INT NOT NULL,
+    RmNum INT NOT NULL,
+    BookingDate DATE NOT NULL,
+    StartDate DATE NOT NULL,
+    EndDate DATE NOT NULL,
+    PaymentStatus VARCHAR(50) NOT NULL,
+    TotCost DECIMAL(10,2) NOT NULL,
+    BkStatus VARCHAR(50) NOT NULL,
+    CONSTRAINT fk_booking_accommodation
+        FOREIGN KEY (AccommodationID) REFERENCES accommodation(AccommodationID)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE,
+    CONSTRAINT fk_booking_student
+        FOREIGN KEY (StudNum) REFERENCES student(StudNum)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE,
+    CONSTRAINT fk_booking_room
+        FOREIGN KEY (RmNum) REFERENCES rooms(RmNum)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
+);
+
+
+CREATE TABLE payment (
+    PaymentID INT AUTO_INCREMENT PRIMARY KEY,
+    BookingID INT NOT NULL,
+    StudNum INT NOT NULL,
+    PaymentDate DATE NOT NULL,
+    PayMethod VARCHAR(50) NOT NULL,
+    AmtPaid DECIMAL(10,2) NOT NULL,
+    CONSTRAINT fk_payment_booking
+        FOREIGN KEY (BookingID) REFERENCES booking(BookingID)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE,
+    CONSTRAINT fk_payment_student
+        FOREIGN KEY (StudNum) REFERENCES student(StudNum)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
+);

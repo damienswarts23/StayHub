@@ -1,67 +1,1104 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>StayHub</title>
-
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 20px;
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
     }
 
-    header {
-      margin-bottom: 20px;
+    :root {
+      --white: #ffffff;
+      --glass: rgba(255, 255, 255, 0.12);
+      --glass-strong: rgba(255, 255, 255, 0.18);
+      --border: rgba(255, 255, 255, 0.28);
+      --shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+      --dark: #0d1b2a;
+      --text-soft: rgba(255, 255, 255, 0.82);
+      --accent: #d6a77a;
+      --accent-dark: #9a6741;
+      --section-bg: #f7f7f9;
+      --card-text: #1f2937;
+    }
+
+    body {
+      background: linear-gradient(180deg, #08111f 0%, #102840 30%, #f3f4f6 30%, #f3f4f6 100%);
+      color: var(--white);
+      min-height: 100vh;
     }
 
     a {
-      margin-right: 10px;
       text-decoration: none;
+      color: inherit;
     }
 
-    section {
-      margin-bottom: 20px;
+    .page-wrap {
+      width: 100%;
+      padding: 24px;
     }
+
+    .hero-shell {
+      position: relative;
+      min-height: 100vh;
+      border: 4px solid rgba(255, 255, 255, 0.55);
+      border-radius: 42px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      background:
+        linear-gradient(to bottom, rgba(5, 14, 25, 0.35), rgba(5, 14, 25, 0.55)),
+        url("Background image.png") center/cover no-repeat;
+    }
+
+    .hero-shell::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at top left, rgba(255,255,255,0.12), transparent 28%),
+        radial-gradient(circle at top right, rgba(255,255,255,0.08), transparent 18%),
+        linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.28));
+      pointer-events: none;
+    }
+
+    .top-nav {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 28px 30px;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .logo-box {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 700;
+      font-size: 1.3rem;
+      letter-spacing: 1px;
+    }
+
+    .logo-box img {
+      width: 44px;
+      height: auto;
+      object-fit: contain;
+      border-radius: 0;
+      border: none;
+      background: transparent;
+      display: block;
+    }
+
+    .nav-pill,
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: var(--glass);
+      border: 1px solid var(--border);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-radius: 999px;
+      padding: 8px 10px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.18);
+    }
+
+    .nav-pill a,
+    .nav-actions a {
+      padding: 12px 20px;
+      border-radius: 999px;
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: var(--white);
+      transition: 0.3s ease;
+    }
+
+    .nav-pill a:hover,
+    .nav-actions a:hover,
+    .nav-pill a.active,
+    .nav-actions a.active {
+      background: rgba(255,255,255,0.2);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      min-height: calc(100vh - 110px);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 40px;
+      padding: 20px 50px 70px;
+    }
+
+    .hero-left {
+      max-width: 650px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      width: fit-content;
+      padding: 12px 18px;
+      background: var(--glass);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      color: var(--text-soft);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      font-size: 0.9rem;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.16);
+    }
+
+    .hero-left h1 {
+      font-size: clamp(2.3rem, 5vw, 4.7rem);
+      line-height: 1.05;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      max-width: 700px;
+    }
+
+    .hero-left h1 span {
+      color: #f1c49b;
+    }
+
+    .hero-left p {
+      max-width: 620px;
+      color: var(--text-soft);
+      font-size: 1.05rem;
+      line-height: 1.8;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+
+    .btn-primary,
+    .btn-secondary {
+      padding: 15px 28px;
+      border-radius: 999px;
+      font-weight: 600;
+      border: 1px solid transparent;
+      transition: 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .btn-primary {
+      background: var(--white);
+      color: #111827;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+      background: rgba(255,255,255,0.08);
+      color: var(--white);
+      border: 1px solid rgba(255,255,255,0.35);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255,255,255,0.16);
+    }
+
+    .hero-card {
+      width: 360px;
+      min-height: 420px;
+      border-radius: 32px;
+      border: 1px solid var(--border);
+      background: linear-gradient(180deg, rgba(255,255,255,0.14), rgba(255,255,255,0.08));
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      padding: 24px;
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .hero-card .card-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+
+    .hero-card .card-top h3 {
+      font-size: 1.15rem;
+      font-weight: 600;
+    }
+
+    .hero-card .mini-tag {
+      padding: 9px 14px;
+      background: rgba(255,255,255,0.15);
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.22);
+      font-size: 0.85rem;
+    }
+
+    .circle-image {
+      width: 210px;
+      height: 210px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 3px solid rgba(255,255,255,0.32);
+      margin: 10px auto 18px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.24);
+    }
+
+    .circle-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .hero-card p {
+      color: var(--text-soft);
+      line-height: 1.7;
+      font-size: 0.95rem;
+      text-align: center;
+    }
+
+    .floating-search {
+      position: relative;
+      z-index: 3;
+      max-width: 1180px;
+      margin: -55px auto 0;
+      padding: 18px;
+      border-radius: 30px;
+      background: rgba(26, 23, 21, 0.45);
+      border: 1px solid rgba(255,255,255,0.18);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      box-shadow: 0 18px 40px rgba(0,0,0,0.25);
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .search-item {
+      min-width: 180px;
+      flex: 1 1 180px;
+      padding: 14px 18px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.14);
+      border: 1px solid rgba(255,255,255,0.18);
+      color: var(--white);
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .search-item label {
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.72);
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+    }
+
+    .search-item select,
+    .search-item input {
+      border: none;
+      outline: none;
+      background: transparent;
+      color: white;
+      font-size: 0.95rem;
+      width: 100%;
+    }
+
+    .search-item option {
+      color: black;
+    }
+
+    .search-btn {
+      padding: 16px 28px;
+      border: none;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #ffffff, #ead3bf);
+      color: #111827;
+      font-weight: 700;
+      cursor: pointer;
+      min-width: 180px;
+      transition: 0.3s ease;
+    }
+
+    .search-btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .content {
+      background: var(--section-bg);
+      color: var(--card-text);
+      padding: 110px 24px 50px;
+    }
+
+    .section-container {
+      max-width: 1250px;
+      margin: 0 auto;
+    }
+
+    .section-heading {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .section-heading span {
+      display: inline-block;
+      padding: 8px 16px;
+      border-radius: 999px;
+      background: #ede2d7;
+      color: var(--accent-dark);
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+
+    .section-heading h2 {
+      font-size: clamp(2rem, 3vw, 3rem);
+      margin-bottom: 10px;
+      color: #0f172a;
+    }
+
+    .section-heading p {
+      max-width: 720px;
+      margin: 0 auto;
+      color: #6b7280;
+      line-height: 1.8;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin-bottom: 80px;
+    }
+
+    .feature-card {
+      background: rgba(255,255,255,0.8);
+      border: 1px solid rgba(15, 23, 42, 0.06);
+      border-radius: 28px;
+      padding: 28px;
+      box-shadow: 0 12px 30px rgba(15, 23, 42, 0.06);
+      transition: 0.3s ease;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-6px);
+    }
+
+    .feature-icon {
+      width: 58px;
+      height: 58px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, #e8c7aa, #c89062);
+      margin-bottom: 18px;
+    }
+
+    .feature-card h3 {
+      font-size: 1.2rem;
+      margin-bottom: 12px;
+      color: #111827;
+    }
+
+    .feature-card p {
+      color: #6b7280;
+      line-height: 1.8;
+      font-size: 0.96rem;
+    }
+
+    .reviews-wrap {
+      margin-bottom: 80px;
+    }
+
+    .reviews-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .review-card {
+      background: linear-gradient(180deg, #ffffff, #f8f8f8);
+      border-radius: 28px;
+      padding: 28px;
+      box-shadow: 0 12px 32px rgba(15, 23, 42, 0.07);
+      border: 1px solid rgba(15, 23, 42, 0.05);
+    }
+
+    .review-top {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 16px;
+    }
+
+    .avatar {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #d6a77a, #8f5b35);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 700;
+    }
+
+    .review-name {
+      font-weight: 700;
+      color: #111827;
+    }
+
+    .stars {
+      color: #d6a77a;
+      font-size: 0.95rem;
+      margin-top: 4px;
+    }
+
+    .review-card p {
+      color: #6b7280;
+      line-height: 1.8;
+      font-size: 0.96rem;
+    }
+
+    .host-section {
+      background:
+        linear-gradient(135deg, rgba(13,27,42,0.92), rgba(25,45,72,0.88)),
+        url("host-bg.jpg") center/cover no-repeat;
+      border-radius: 36px;
+      padding: 60px;
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 30px;
+      flex-wrap: wrap;
+      box-shadow: 0 18px 40px rgba(0,0,0,0.18);
+      margin-bottom: 60px;
+    }
+
+    .host-text {
+      max-width: 700px;
+    }
+
+    .host-text h2 {
+      font-size: clamp(2rem, 3vw, 3.2rem);
+      margin-bottom: 16px;
+    }
+
+    .host-text p {
+      color: rgba(255,255,255,0.82);
+      line-height: 1.9;
+      font-size: 1rem;
+    }
+
+    .host-btn {
+      padding: 16px 30px;
+      background: white;
+      color: #111827;
+      border-radius: 999px;
+      font-weight: 700;
+      display: inline-block;
+      white-space: nowrap;
+    }
+
+    footer {
+      background: #0b1320;
+      color: rgba(255,255,255,0.8);
+      border-radius: 32px;
+      padding: 28px 32px;
+    }
+
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      gap: 24px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .footer-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 700;
+      color: white;
+    }
+
+    .footer-brand img {
+      width: 46px;
+      height: auto;
+      border-radius: 0;
+      object-fit: contain;
+      display: block;
+    }
+
+    .socials {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .socials a {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 0.9rem;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    @media (max-width: 1100px) {
+      .hero-content {
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+        padding: 30px 30px 90px;
+      }
+
+      .hero-card {
+        width: 100%;
+        max-width: 420px;
+      }
+
+      .features-grid,
+      .reviews-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .host-section {
+        padding: 40px 28px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .page-wrap {
+        padding: 12px;
+      }
+
+      .hero-shell {
+        border-radius: 24px;
+      }
+
+      .top-nav {
+        padding: 20px 18px;
+      }
+
+      .nav-pill,
+      .nav-actions {
+        width: 100%;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+
+      .hero-content {
+        padding: 10px 18px 85px;
+      }
+
+      .hero-left h1 {
+        font-size: 2.2rem;
+      }
+
+      .floating-search {
+        margin-top: -40px;
+        border-radius: 24px;
+      }
+
+      .content {
+        padding-top: 90px;
+      }
+
+      .host-section {
+        text-align: left;
+      }
+
+      footer {
+        padding: 24px 20px;
+      }
+      
+}
+.search-results {
+  margin-top: 40px;
+}
+
+.search-results {
+  max-width: 1180px;
+  margin: 40px auto 0;
+  padding: 0 10px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 22px;
+  position: relative;
+  z-index: 10;
+}
+
+.result-card {
+  background: rgba(255,255,255,0.92);
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-radius: 24px;
+  padding: 24px;
+  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
+  color: #111827;
+  transition: 0.3s ease;
+}
+
+.result-card:hover {
+  transform: translateY(-5px);
+}
+
+.result-card h3 {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+  color: #111827;
+}
+
+.result-card p {
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: #6b7280;
+  margin-bottom: 10px;
+}
+
+.result-rooms {
+  margin: 12px 0 18px;
+  padding-left: 18px;
+  color: #374151;
+}
+
+.result-rooms li {
+  margin-bottom: 6px;
+}
+
+.result-btn {
+  display: inline-block;
+  width: 100%;
+  text-align: center;
+  padding: 14px 18px;
+  border-radius: 999px;
+  background: #0d1b2a;
+  color: white;
+  font-weight: 600;
+  transition: 0.3s ease;
+}
+
+.result-btn:hover {
+  background: #162b42;
+}
+
+.no-results {
+  max-width: 1180px;
+  margin: 30px auto 0;
+  background: rgba(255,255,255,0.92);
+  color: #111827;
+  padding: 22px;
+  border-radius: 20px;
+  text-align: center;
+  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
+}
+.search-results {
+  max-width: 1180px;
+  margin: 40px auto 0;
+  padding: 0 10px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 22px;
+  position: relative;
+  z-index: 5;
+}
+
+.result-card {
+  background: rgba(255,255,255,0.96);
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-radius: 24px;
+  padding: 24px;
+  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
+  color: #111827;
+  transition: 0.3s ease;
+}
+
+.result-card:hover {
+  transform: translateY(-5px);
+}
+
+.result-card h3 {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+  color: #111827;
+}
+
+.result-card p {
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: #6b7280;
+  margin-bottom: 10px;
+}
+
+.result-rooms {
+  margin: 12px 0 18px;
+  padding-left: 18px;
+  color: #374151;
+}
+
+.result-rooms li {
+  margin-bottom: 6px;
+}
+
+.result-btn {
+  display: inline-block;
+  width: 100%;
+  text-align: center;
+  padding: 14px 18px;
+  border-radius: 999px;
+  background: #0d1b2a;
+  color: white;
+  font-weight: 600;
+  transition: 0.3s ease;
+}
+
+.result-btn:hover {
+  background: #162b42;
+}
+
+.no-results {
+  max-width: 1180px;
+  margin: 40px auto 0;
+  background: rgba(255,255,255,0.96);
+  color: #111827;
+  padding: 22px;
+  border-radius: 20px;
+  text-align: center;
+  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
+  position: relative;
+  z-index: 5;
+}
+    
   </style>
 </head>
-
 <body>
+  <div class="page-wrap">
+    <div class="hero-shell">
 
-  <!-- Header -->
-  <header>
-    <h1>StayHub</h1>
-    <p>Making Life Easier</p>
+      <header class="top-nav">
+        <div class="logo-box">
+          <img src="Logo_enhanced.png" alt="StayHub logo">
+          <span>STAYHUB</span>
+        </div>
 
-    <!-- Buttons (links to pages) -->
-    <a href="login.php">Login</a>
-    <a href="register.html">Register</a>
-  </header>
+        <nav class="nav-pill">
+          <a href="#" class="active">Home</a>
+          <a href="#why-us">Why Us?</a>
+          <a href="#reviews">Reviews</a>
+          <a href="#host">Become a Landlord</a>
+        </nav>
 
-  <!-- Why Us -->
-  <section>
-    <h2>Why Us?</h2>
-    <p>We connect CPUT students with safe and affordable housing.</p>
-  </section>
+        <div class="nav-actions">
+          <a href="login.php">LOGIN</a>
+          <a href="register.html" class="active">REGISTER</a>
+        </div>
+      </header>
 
-  <!-- Trusted -->
-  <section>
-    <h2>Trusted Listings</h2>
-    <p>All properties are checked to meet student needs.</p>
-  </section>
+      <section class="hero-content">
+        <div class="hero-left">
+          <div class="hero-badge">Luxury • Comfort • Trusted Stays</div>
 
-  <!-- Easy -->
-  <section>
-    <h2>Easy to Use</h2>
-    <p>Simple platform to find accommodation quickly.</p>
-  </section>
+          <h1>FIND YOUR STAY, FEEL AT <span>HOME</span></h1>
 
-  <!-- Reviews -->
-  <section>
-    <h2>Reviews</h2>
-    <p>John Doe - Verified and reliable options.</p>
-    <p>Jane Smith - Found a place near campus easily.</p>
-  </section>
+          <p>
+            Stay Hub helps travelers, families, couples, and solo guests discover beautiful,
+            comfortable, and reliable accommodation with ease. Explore verified places, compare options,
+            and book your next stay with confidence.
+          </p>
 
+          <div class="hero-buttons">
+            <a href="register.html" class="btn-primary">Get Started</a>
+            <a href="#why-us" class="btn-secondary">Explore More</a>
+          </div>
+        </div>
+
+        <div class="hero-card">
+          <div class="card-top">
+            <h3>Premium Stays</h3>
+            <div class="mini-tag">Modern</div>
+          </div>
+
+          <div class="circle-image">
+            <img src="circular image.png" alt="Accommodation preview">
+          </div>
+
+          <p>
+            From peaceful nature escapes to stylish city stays, StayHub helps you find spaces
+            that match your mood, budget, and travel experience.
+          </p>
+        </div>
+      </section>
+    </div>
+
+<div class="floating-search">
+  <div class="search-item">
+    <label>Check-in Date</label>
+    <input type="date" id="checkIn">
+  </div>
+
+  <div class="search-item">
+    <label>Check-out Date</label>
+    <input type="date" id="checkOut">
+  </div>
+
+  <div class="search-item">
+    <label>Guests</label>
+    <select id="guests">
+      <option>1 Guest</option>
+      <option>2 Guests</option>
+      <option>3 Guests</option>
+      <option>4+ Guests</option>
+    </select>
+  </div>
+
+  <div class="search-item">
+    <label>Room Type</label>
+    <select id="roomType">
+      <option>Any Room</option>
+      <option>Single Room</option>
+      <option>Shared Room</option>
+      <option>Studio</option>
+      <option>Family Room</option>
+      <option>Luxury Suite</option>
+    </select>
+  </div>
+
+  <button class="search-btn" id="findAccommodationBtn">Find Accommodation</button>
+</div>
+
+
+
+  <main class="content">
+
+    <div id="searchResults" class="search-results"></div>
+
+    <div class="section-container">
+
+      <section id="why-us">
+        <div class="section-heading">
+          <span>Why StayHub</span>
+          <h2>Designed for Every Traveler</h2>
+          <p>
+            StayHub is built to make finding accommodation simple, stylish, and stress-free
+            for anyone looking for a memorable stay.
+          </p>
+        </div>
+
+        <div class="features-grid">
+          <div class="feature-card">
+            <div class="feature-icon"></div>
+            <h3>Verified Properties</h3>
+            <p>
+              Browse accommodation you can trust. We focus on quality listings that offer comfort,
+              safety, and a better booking experience.
+            </p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon"></div>
+            <h3>Comfort for Every Stay</h3>
+            <p>
+              Whether you are planning a weekend getaway, family trip, work stay, or holiday,
+              StayHub helps you find the right place for every occasion.
+            </p>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon"></div>
+            <h3>Easy Booking Experience</h3>
+            <p>
+              Search, compare, and choose accommodation easily through a smooth and modern platform
+              designed to save you time.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section id="reviews" class="reviews-wrap">
+        <div class="section-heading">
+          <span>Reviews</span>
+          <h2>What Our Guests Say</h2>
+          <p>
+            Guests love the convenience, atmosphere, and quality they find through StayHub.
+          </p>
+        </div>
+
+        <div class="reviews-grid">
+          <div class="review-card">
+            <div class="review-top">
+              <div class="avatar">AM</div>
+              <div>
+                <div class="review-name">Ava M.</div>
+                <div class="stars">★★★★★</div>
+              </div>
+            </div>
+            <p>
+              “The booking process was smooth, and the place looked exactly like the photos. I would definitely book through StayHub again.”
+            </p>
+          </div>
+
+          <div class="review-card">
+            <div class="review-top">
+              <div class="avatar">DK</div>
+              <div>
+                <div class="review-name">Daniel K.</div>
+                <div class="stars">★★★★★</div>
+              </div>
+            </div>
+            <p>
+              “I found a beautiful stay for my weekend trip in minutes. Everything felt modern, easy, and reliable.”
+            </p>
+          </div>
+
+          <div class="review-card">
+            <div class="review-top">
+              <div class="avatar">LS</div>
+              <div>
+                <div class="review-name">Lerato S.</div>
+                <div class="stars">★★★★★</div>
+              </div>
+            </div>
+            <p>
+              “Stylish places, simple booking, and great options for different budgets. StayHub made planning so much easier.”
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section id="host" class="host-section">
+        <div class="host-text">
+          <h2>Become a Host</h2>
+          <p>
+            Have a beautiful property, apartment, guest room, or holiday stay to offer? Join StayHub
+            and connect with guests looking for comfort, convenience, and memorable accommodation experiences.
+          </p>
+        </div>
+
+        <a href="register_host.html" class="host-btn">Become a Host</a>
+      </section>
+
+      <footer>
+        <div class="footer-inner">
+          <div>
+            <div class="footer-brand">
+              <img src="Logo_enhanced.png" alt="StayHub logo">
+              <span>STAYHUB</span>
+            </div>
+            <p style="margin-top: 10px;">Discover stays made for comfort, style, and convenience.</p>
+            <p style="margin-top: 6px;">© 2025 All Rights Reserved</p>
+          </div>
+
+          <div style="text-align: right;">
+            <p style="margin-bottom: 12px; color: white; font-weight: 600;">Follow Us</p>
+            <div class="socials">
+              <a href="#">F</a>
+              <a href="#">I</a>
+              <a href="#">X</a>
+              <a href="#">T</a>
+            </div>
+          </div>
+        </div>
+      </footer>
+
+    </div>
+  </main>
+  <script>
+  const findAccommodationBtn = document.getElementById("findAccommodationBtn");
+  const searchResults = document.getElementById("searchResults");
+  const roomTypeSelect = document.getElementById("roomType");
+
+  findAccommodationBtn.addEventListener("click", async function () {
+    searchResults.innerHTML = "<div class='no-results'>Loading accommodations...</div>";
+
+    try {
+      const response = await fetch("search-api.php");
+      const data = await response.json();
+
+      const selectedRoomType = roomTypeSelect.value.trim();
+
+      let filteredData = data;
+
+      if (selectedRoomType !== "Any Room") {
+        filteredData = data.filter(accommodation =>
+          accommodation.Rooms.some(room => room.RmType === selectedRoomType)
+        );
+      }
+
+      if (!filteredData.length) {
+        searchResults.innerHTML = "<div class='no-results'>No accommodations found.</div>";
+        return;
+      }
+
+      let html = "";
+
+      filteredData.forEach(accommodation => {
+        let roomsHtml = "";
+
+        if (accommodation.Rooms.length > 0) {
+          roomsHtml = "<ul class='result-rooms'>";
+          accommodation.Rooms.forEach(room => {
+            roomsHtml += `
+              <li>
+                <strong>${room.RmType}</strong> - R${room.Price} - ${room.Available} available
+              </li>
+            `;
+          });
+          roomsHtml += "</ul>";
+        } else {
+          roomsHtml = "<p>No room information available.</p>";
+        }
+
+        html += `
+          <div class="result-card">
+            <h3>${accommodation.Name}</h3>
+            <p><strong>Address:</strong> ${accommodation.Address ?? "N/A"}</p>
+            <p><strong>Contact:</strong> ${accommodation.ContactNum ?? "N/A"}</p>
+            <p><strong>Amenities:</strong> ${accommodation.Amenities ?? "N/A"}</p>
+            ${roomsHtml}
+            <a class="result-btn" href="login.php?accommodation_id=${accommodation.AccommodationID}">
+              Book Now
+            </a>
+          </div>
+        `;
+      });
+
+      searchResults.innerHTML = html;
+    } catch (error) {
+      console.error(error);
+      searchResults.innerHTML = "<div class='no-results'>Failed to load accommodations.</div>";
+    }
+  });
+</script>
 </body>
 </html>
