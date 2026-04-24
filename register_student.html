@@ -1,21 +1,396 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Register</title>
-    <script src="https://unpkg.com/just-validate@latest/dist/just-validate.production.min.js" defer></script>
-  </head>
-  <body>
-    <header>
-      <div>STAY HUB</div>
-      <nav>
-        <a href="index.html">Home</a>
-        <a href="login.php">Login</a>
-      </nav>
-    </header>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Student Registration</title>
 
-    <main>
-      <h2>Customer Registration</h2>
+  <script src="https://unpkg.com/just-validate@latest/dist/just-validate.production.min.js" defer></script>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Poppins", "Segoe UI", sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      color: #fff;
+      background:
+        radial-gradient(circle at top left, rgba(83, 180, 255, 0.2), transparent 28%),
+        radial-gradient(circle at bottom right, rgba(255, 153, 76, 0.16), transparent 28%),
+        linear-gradient(180deg, #06111d, #081827);
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background-image:
+        radial-gradient(1.5px 1.5px at 40px 50px, rgba(255,255,255,0.5), transparent),
+        radial-gradient(1.5px 1.5px at 220px 130px, rgba(255,255,255,0.35), transparent),
+        radial-gradient(2px 2px at 500px 90px, rgba(255,255,255,0.35), transparent),
+        radial-gradient(1.5px 1.5px at 760px 180px, rgba(255,255,255,0.45), transparent);
+      background-size: 850px 300px;
+      opacity: 0.28;
+      pointer-events: none;
+    }
+
+    header {
+      padding: 26px 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: relative;
+      z-index: 5;
+    }
+
+    .logo {
+      font-size: 1.35rem;
+      font-weight: 700;
+      letter-spacing: 0.4px;
+    }
+
+    nav {
+      display: flex;
+      gap: 10px;
+      padding: 8px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.14);
+      backdrop-filter: blur(14px);
+    }
+
+    nav a {
+      color: #fff;
+      text-decoration: none;
+      padding: 10px 18px;
+      border-radius: 999px;
+      font-size: 0.9rem;
+      transition: 0.3s;
+    }
+
+    nav a:hover {
+      background: rgba(255,255,255,0.12);
+    }
+
+    main {
+      padding: 20px 60px 60px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .register-shell {
+      max-width: 1220px;
+      min-height: 78vh;
+      margin: auto;
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      border-radius: 36px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.14);
+      box-shadow: 0 30px 90px rgba(0,0,0,0.48);
+      background: rgba(255,255,255,0.04);
+      backdrop-filter: blur(16px);
+    }
+
+    .visual-side {
+      position: relative;
+      padding: 40px;
+      background:
+        linear-gradient(rgba(5, 15, 25, 0.18), rgba(5, 15, 25, 0.75)),
+        url("./images/accommodation 8.png") center/cover no-repeat;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 650px;
+    }
+
+    .visual-side::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 40% 25%, rgba(100,190,255,0.22), transparent 30%),
+        radial-gradient(circle at 75% 85%, rgba(255,145,70,0.28), transparent 24%);
+      pointer-events: none;
+    }
+
+    .hero-copy,
+    .mini-card,
+    .feature-row {
+      position: relative;
+      z-index: 2;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 9px 15px;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      color: #dbefff;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.16);
+      backdrop-filter: blur(12px);
+      margin-bottom: 18px;
+    }
+
+    .hero-copy h1 {
+      font-size: 3rem;
+      line-height: 1.05;
+      max-width: 390px;
+      margin-bottom: 16px;
+      font-weight: 700;
+    }
+
+    .hero-copy p {
+      color: rgba(238,246,255,0.82);
+      line-height: 1.7;
+      max-width: 380px;
+      font-size: 0.95rem;
+    }
+
+    .feature-row {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .feature-row span {
+      padding: 10px 15px;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      background: rgba(255,255,255,0.09);
+      border: 1px solid rgba(255,255,255,0.15);
+      backdrop-filter: blur(12px);
+    }
+
+    .mini-card {
+      width: 250px;
+      padding: 18px;
+      border-radius: 24px;
+      background: rgba(6,18,31,0.48);
+      border: 1px solid rgba(255,255,255,0.16);
+      backdrop-filter: blur(18px);
+      box-shadow: 0 18px 40px rgba(0,0,0,0.25);
+      margin-left: auto;
+    }
+
+    .mini-card strong {
+      display: block;
+      font-size: 1.5rem;
+      margin-bottom: 4px;
+    }
+
+    .mini-card p {
+      color: rgba(235,244,255,0.76);
+      font-size: 0.85rem;
+      line-height: 1.5;
+    }
+
+    .form-side {
+      padding: 42px;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.96), rgba(246,249,252,0.94));
+      color: #101820;
+    }
+
+    .form-heading {
+      margin-bottom: 26px;
+    }
+
+    .form-heading span {
+      display: inline-block;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: #edf5fb;
+      color: #31546b;
+      font-size: 0.78rem;
+      font-weight: 600;
+      margin-bottom: 14px;
+    }
+
+    .form-heading h2 {
+      font-size: 2.2rem;
+      margin-bottom: 8px;
+      color: #0b1722;
+    }
+
+    .form-heading p {
+      color: #687684;
+      line-height: 1.6;
+      font-size: 0.95rem;
+      max-width: 560px;
+    }
+
+    form {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    form > div {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .full {
+      grid-column: span 2;
+    }
+
+    label {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: #384b5c;
+      margin-bottom: 7px;
+    }
+
+    input,
+    select {
+      width: 100%;
+      padding: 15px 16px;
+      border-radius: 16px;
+      border: 1px solid #dbe4ec;
+      background: #ffffff;
+      color: #14212d;
+      outline: none;
+      font-size: 0.92rem;
+      transition: 0.25s ease;
+    }
+
+    input:focus,
+    select:focus {
+      border-color: #d78845;
+      box-shadow: 0 0 0 4px rgba(215,136,69,0.16);
+    }
+
+    select {
+      cursor: pointer;
+    }
+
+    button {
+      grid-column: span 2;
+      margin-top: 8px;
+      padding: 16px;
+      border-radius: 999px;
+      border: none;
+      background: linear-gradient(135deg, #0a1d2f, #143957);
+      color: white;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 14px 30px rgba(10,29,47,0.22);
+      transition: 0.3s ease;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 18px 38px rgba(10,29,47,0.28);
+    }
+
+    footer {
+      text-align: center;
+      padding: 22px;
+      color: rgba(232,242,255,0.68);
+      font-size: 0.85rem;
+    }
+
+    @media (max-width: 950px) {
+      header {
+        padding: 24px 22px;
+        flex-direction: column;
+        gap: 16px;
+      }
+
+      main {
+        padding: 15px 20px 40px;
+      }
+
+      .register-shell {
+        grid-template-columns: 1fr;
+      }
+
+      .visual-side {
+        min-height: 430px;
+      }
+
+      .hero-copy h1 {
+        font-size: 2.3rem;
+      }
+    }
+
+    @media (max-width: 650px) {
+      .form-side {
+        padding: 28px 20px;
+      }
+
+      form {
+        grid-template-columns: 1fr;
+      }
+
+      .full,
+      button {
+        grid-column: span 1;
+      }
+
+      .visual-side {
+        padding: 28px 20px;
+      }
+
+      .mini-card {
+        width: 100%;
+        margin-left: 0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">Stay Hub</div>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="login.php">Login</a>
+  </nav>
+</header>
+
+<main>
+  <section class="register-shell">
+
+    <aside class="visual-side">
+      <div class="hero-copy">
+        <span class="tag">Student stay access</span>
+        <h1>Find your next comfortable stay.</h1>
+        <p>
+          Create your account and get access to accommodation options designed
+          for simple, secure, and stress-free booking.
+        </p>
+      </div>
+
+      <div class="mini-card">
+        <strong>24/7</strong>
+        <p>Browse accommodation, compare options, and manage your stay with confidence.</p>
+      </div>
+
+      <div class="feature-row">
+        <span>Verified stays</span>
+        <span>Easy booking</span>
+        <span>Secure access</span>
+      </div>
+    </aside>
+
+    <section class="form-side">
+      <div class="form-heading">
+        <span>New Student profile</span>
+        <h2>Student Registration</h2>
+        <p>
+          Fill in your details below to create your Stay Hub account.
+        </p>
+      </div>
+
       <form action="register.php" method="post" id="register-form" novalidate>
         <input type="hidden" name="role" value="student">
 
@@ -55,11 +430,6 @@
         </div>
 
         <div>
-          <label for="password">Password</label>
-          <input type="password" id="password" name="password" required />
-        </div>
-
-        <div>
           <label for="funding">Funding</label>
           <select id="funding" name="funding" required>
             <option>Bursary</option>
@@ -68,12 +438,21 @@
           </select>
         </div>
 
-        <button type="submit">Register</button>
-      </form>
-    </main>
+        <div class="full">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" required />
+        </div>
 
-    <footer>
-      <p>© 2025 STAY HUB. All rights reserved.</p>
-    </footer>
-  </body>
+        <button type="submit">Create Student Account</button>
+      </form>
+    </section>
+
+  </section>
+</main>
+
+<footer>
+  <p>© 2025 Stay Hub. All rights reserved.</p>
+</footer>
+
+</body>
 </html>
