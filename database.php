@@ -3,7 +3,7 @@
 $host = "localhost";
 $dbname = "cput_stays";
 $username = "root";
-$password = "";
+$password = "#Chelsea4life";
 
 $mysqli = new mysqli($host, $username, $password, $dbname);
 
