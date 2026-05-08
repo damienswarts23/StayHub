@@ -4,7 +4,7 @@
 
 ### *Find Your Stay, Feel At Home.*
 
-<img width="100%" alt="STAYHUB Preview" src="./images/screenshots/homescreen.png"/>
+<img width="100%" alt="STAYHUB Preview" src="./images/Screenshots/homescreen.png"/>
 
 <br>
 
@@ -143,7 +143,7 @@ Search accommodations and explore available stays easily.
 
 ## Landing Page
 
-<img width="70%" alt="STAYHUB Landing Page" src="./images/screenshots/landing.png"/>
+<img width="70%" alt="STAYHUB Landing Page" src="./images/Screenshots/landing.png"/>
 
 ---
 
